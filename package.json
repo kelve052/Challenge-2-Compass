@@ -1,0 +1,25 @@
+{
+  "name": "challeng-1-compass",
+  "version": "1.0.0",
+  "description": "Desafio de micro serviço de uma veterinária em node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kelve052/Challeng-1-Compass.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kelve052/Challeng-1-Compass/issues"
+  },
+  "homepage": "https://github.com/kelve052/Challeng-1-Compass#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22"
+  }
+}
