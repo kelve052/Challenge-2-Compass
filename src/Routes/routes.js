@@ -5,6 +5,7 @@ var router = express.Router();
 var tutors_1 = require("../controllers/tutors");
 //get and post
 router.route('/tutors').get(tutors_1.default.TutorsGet).post(tutors_1.default.TutorsPost);
+router.route('/pet/:tutorId').post(tutors_1.default.PetPost);
 //delete and put
 router.route('/tutor:id').delete(function (req, res) {
     var id = req.params.id;

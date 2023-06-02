@@ -4,6 +4,7 @@ import tutors from "../controllers/tutors";
 //get and post
 router.route('/tutors').get(tutors.TutorsGet).post(tutors.TutorsPost)
 
+router.route('/pet/:tutorId').post(tutors.PetPost)
 
 
 
