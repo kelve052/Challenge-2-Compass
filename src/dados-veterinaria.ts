@@ -10,7 +10,7 @@ type petstype = [{
 type dadosType = [{
     id: number,
     name: string,
-    phone: number
+    phone: number,
     email: string,
     date_of_birth: string,
     zip_code: number,

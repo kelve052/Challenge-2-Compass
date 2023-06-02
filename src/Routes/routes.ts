@@ -1,12 +1,14 @@
 import * as express from "express";
 const router = express.Router()
-
+import tutors from "../controllers/tutors";
 //get and post
-router.route('/tutors').get((req, res)=>{
-    res.send('rota get susefull!')
-}).post((req, res)=>{
-    res.send('rota post sulcefull!')
-})
+router.route('/tutors').get(tutors.TutorsGet).post(tutors.TutorsPost)
+
+
+
+
+
+
 
 //delete and put
 router.route('/tutor:id').delete((req, res)=>{

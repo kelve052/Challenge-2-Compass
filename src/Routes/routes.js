@@ -2,12 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
+var tutors_1 = require("../controllers/tutors");
 //get and post
-router.route('/tutors').get(function (req, res) {
-    res.send('rota get susefull!');
-}).post(function (req, res) {
-    res.send('rota post sulcefull!');
-});
+router.route('/tutors').get(tutors_1.default.TutorsGet).post(tutors_1.default.TutorsPost);
 //delete and put
 router.route('/tutor:id').delete(function (req, res) {
     var id = req.params.id;
