@@ -75,7 +75,7 @@ var PutTutor = (function (req, res) {
     var existed = dados_veterinaria_1.dados.findIndex(function (a) { return a.id == idTutor; });
     if (existed > -1) {
         if (pets) {
-            res.send('não é permitido atualizar os pets do tutor!\nSomente na atualização direta do pet!\nRenova a propiedade pets');
+            res.send('não é permitido atualizar os pets do tutor!\nSomente na execução de update ao pet!\nRenova a propiedade pets');
         }
         else {
             if (id && name) {
@@ -97,4 +97,39 @@ var PutTutor = (function (req, res) {
         res.send("O id informado n\u00E3o existe!");
     }
 });
-exports.default = { TutorsGet: TutorsGet, TutorsPost: TutorsPost, PutTutor: PutTutor, PetPost: PetPost };
+var PutPet = (function (req, res) {
+    var idTutor = req.params.tutorId;
+    var idPet = req.params.petId;
+    var existed = dados_veterinaria_1.dados.findIndex(function (a) { return a.id == idTutor; });
+    if (existed > -1) { // id tutor existe
+        try {
+            var existedPet = dados_veterinaria_1.dados[existed].pets.findIndex(function (a) { return a.id == idPet; });
+            if (existedPet > -1) { // id pet existe
+                var _a = req.body, id = _a.id, name_2 = _a.name, species = _a.species, carry = _a.carry, weight = _a.weight, date_of_birth = _a.date_of_birth;
+                var updatePet = { id: id, name: name_2, species: species, carry: carry, weight: weight, date_of_birth: date_of_birth };
+                if (id == idPet) { //id não mudou
+                    if (id && name_2 && species && weight) { //propiedades obrigatórios informados
+                        dados_veterinaria_1.dados[existed].pets[existedPet] = updatePet;
+                        res.send(dados_veterinaria_1.dados[existed].pets[existedPet]);
+                    }
+                    else { //Propiedades obrigtórias faltando
+                        res.send('Propiedades obrigatórias faltando!\nPropiedades obrigatórias: ID, NAME, SPECIES, WEIGHT');
+                    }
+                }
+                else { //id mudou
+                    res.send('O id do pet não pode ser alterado!');
+                }
+            }
+            else { //pet não existe
+                res.send('o id informado não pertence a nenhum pet!');
+            }
+        }
+        catch (error) {
+            res.send("o Tutor informado não possui nenhum pet!");
+        }
+    }
+    else { //id tutor não existe
+        res.send('O id informado não pertence a nenhum tutor!');
+    }
+});
+exports.default = { TutorsGet: TutorsGet, TutorsPost: TutorsPost, PutTutor: PutTutor, PetPost: PetPost, PutPet: PutPet };

@@ -90,4 +90,35 @@ const PutTutor = ((req, res)=>{
         res.send(`O id informado não existe!`)
     }
 })
-export default {TutorsGet, TutorsPost, PutTutor, PetPost}
+
+const PutPet = ((req, res)=>{
+    const idTutor = req.params.tutorId
+    const idPet = req.params.petId
+    const existed = dados.findIndex(a => a.id == idTutor)
+    if(existed > -1){// id tutor existe
+        try {
+            const existedPet = dados[existed].pets.findIndex(a => a.id == idPet)
+            if(existedPet > -1){// id pet existe
+                const {id, name, species, carry, weight, date_of_birth} = req.body
+                const updatePet = {id, name, species, carry, weight, date_of_birth}
+                if(id == idPet){//id não mudou
+                    if(id && name && species && weight){//propiedades obrigatórios informados
+                        dados[existed].pets[existedPet] = updatePet
+                        res.send(dados[existed].pets[existedPet])
+                    }else{//Propiedades obrigtórias faltando
+                        res.send('Propiedades obrigatórias faltando!\nPropiedades obrigatórias: ID, NAME, SPECIES, WEIGHT')
+                    }
+                }else{//id mudou
+                    res.send('O id do pet não pode ser alterado!')
+                }
+            }else{//pet não existe
+                res.send('o id informado não pertence a nenhum pet!')
+            }
+        } catch (error) {
+            res.send("o Tutor informado não possui nenhum pet!")
+        }
+    }else{//id tutor não existe
+        res.send('O id informado não pertence a nenhum tutor!')
+    }
+})
+export default {TutorsGet, TutorsPost, PutTutor, PetPost, PutPet}
