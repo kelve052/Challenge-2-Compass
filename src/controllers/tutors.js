@@ -68,4 +68,33 @@ var PetPost = (function (req, res) {
         res.status(200).send("O id informado não pertence a nenhum tutor!");
     }
 });
-exports.default = { TutorsGet: TutorsGet, TutorsPost: TutorsPost, PetPost: PetPost };
+var PutTutor = (function (req, res) {
+    var _a = req.body, id = _a.id, name = _a.name, phone = _a.phone, email = _a.email, date_of_birth = _a.date_of_birth, zip_code = _a.zip_code, pets = _a.pets;
+    var newdados = { id: id, name: name, phone: phone, email: email, date_of_birth: date_of_birth, zip_code: zip_code, pets: pets };
+    var idTutor = req.params.id;
+    var existed = dados_veterinaria_1.dados.findIndex(function (a) { return a.id == idTutor; });
+    if (existed > -1) {
+        if (pets) {
+            res.send('não é permitido atualizar os pets do tutor!\nSomente na atualização direta do pet!\nRenova a propiedade pets');
+        }
+        else {
+            if (id && name) {
+                if (idTutor == id) {
+                    newdados.pets = dados_veterinaria_1.dados[existed].pets;
+                    dados_veterinaria_1.dados[existed] = newdados;
+                    res.json(dados_veterinaria_1.dados[existed]);
+                }
+                else {
+                    res.send("O id não pode ser alterado!");
+                }
+            }
+            else {
+                res.send("Propiedades chave faltando!!\n propiedades chaves: ID e NAME");
+            }
+        }
+    }
+    else {
+        res.send("O id informado n\u00E3o existe!");
+    }
+});
+exports.default = { TutorsGet: TutorsGet, TutorsPost: TutorsPost, PutTutor: PutTutor, PetPost: PetPost };

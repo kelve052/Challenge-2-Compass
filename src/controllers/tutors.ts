@@ -64,4 +64,30 @@ const PetPost = ((req, res)=>{
         res.status(200).send("O id informado não pertence a nenhum tutor!")
     }
 })
-export default {TutorsGet, TutorsPost, PetPost}
+
+const PutTutor = ((req, res)=>{
+    const {id, name, phone, email, date_of_birth, zip_code, pets} = req.body
+    const newdados = {id, name, phone, email, date_of_birth, zip_code, pets}
+    const idTutor:number = req.params.id
+    const existed = dados.findIndex(a => a.id == idTutor)
+    if(existed > -1){
+        if(pets){
+            res.send('não é permitido atualizar os pets do tutor!\nSomente na execução de update ao pet!\nRenova a propiedade pets')
+        }else{
+            if(id && name){
+                if(idTutor == id){
+                    newdados.pets = dados[existed].pets
+                    dados[existed] = newdados
+                    res.json(dados[existed])
+                }else{
+                    res.send("O id não pode ser alterado!")
+                }
+            }else{
+                res.send(`Propiedades chave faltando!!\n propiedades chaves: ID e NAME`)
+            }
+        }
+    }else{
+        res.send(`O id informado não existe!`)
+    }
+})
+export default {TutorsGet, TutorsPost, PutTutor, PetPost}

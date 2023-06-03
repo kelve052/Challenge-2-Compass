@@ -12,12 +12,9 @@ router.route('/pet/:tutorId').post(tutors.PetPost)
 
 
 //delete and put
-router.route('/tutor:id').delete((req, res)=>{
+router.route('/tutor/:id').delete((req, res)=>{
     const id = req.params.id
     res.send(`rota delete sucefull id = ${id}`)
-}).put((req, res)=>{
-    const id = req.params.id
-    res.send(`rota put sucefull id = ${id}`)
-})
+}).put(tutors.PutTutor)
 
 export default router
