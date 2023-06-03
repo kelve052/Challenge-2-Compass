@@ -132,4 +132,38 @@ var PutPet = (function (req, res) {
         res.send('O id informado não pertence a nenhum tutor!');
     }
 });
-exports.default = { TutorsGet: TutorsGet, TutorsPost: TutorsPost, PutTutor: PutTutor, PetPost: PetPost, PutPet: PutPet };
+var DeleteTutor = (function (req, res) {
+    var idTutor = req.params.id;
+    var existed = dados_veterinaria_1.dados.findIndex(function (a) { return a.id == idTutor; });
+    if (existed > -1) { //id existe
+        dados_veterinaria_1.dados.splice(existed, 1);
+        res.send('Tutor deletado com sucesso');
+    }
+    else { //id não existe
+        res.send('O id informado não existe!');
+    }
+});
+var DeletePet = (function (req, res) {
+    var idTutor = req.params.tutorId;
+    var idPet = req.params.petId;
+    var existed = dados_veterinaria_1.dados.findIndex(function (a) { return a.id == idTutor; });
+    if (existed > -1) { //id tutor existe
+        try {
+            var existedPet = dados_veterinaria_1.dados[existed].pets.findIndex(function (a) { return a.id == idPet; });
+            if (existedPet > -1) { // id pet existe
+                dados_veterinaria_1.dados[existed].pets.splice(existedPet, 1);
+                res.send('Pet deletado com sucesso');
+            }
+            else { //pet não existe
+                res.send('o id informado não pertence a nenhum pet!');
+            }
+        }
+        catch (error) {
+            res.send("o Tutor informado não possui nenhum pet!");
+        }
+    }
+    else { //id tutor não existe
+        res.send('O id informado não existe!');
+    }
+});
+exports.default = { TutorsGet: TutorsGet, TutorsPost: TutorsPost, PutTutor: PutTutor, PetPost: PetPost, PutPet: PutPet, DeleteTutor: DeleteTutor, DeletePet: DeletePet };

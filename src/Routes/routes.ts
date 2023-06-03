@@ -5,12 +5,9 @@ import tutors from "../controllers/tutors";
 router.route('/tutors').get(tutors.TutorsGet).post(tutors.TutorsPost)
 
 //delete and put
-router.route('/tutor/:id').delete((req, res)=>{
-    const id = req.params.id
-    res.send(`rota delete sucefull id = ${id}`)
-}).put(tutors.PutTutor)
+router.route('/tutor/:id').delete(tutors.DeleteTutor).put(tutors.PutTutor)
 
 router.route('/pet/:tutorId').post(tutors.PetPost)
-router.route('/pet/:petId/tutor/:tutorId').put(tutors.PutPet)
+router.route('/pet/:petId/tutor/:tutorId').put(tutors.PutPet).delete(tutors.DeletePet)
 
 export default router

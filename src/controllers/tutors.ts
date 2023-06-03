@@ -1,6 +1,5 @@
 import { dados } from "../dados-veterinaria"
 
-
 //get->
 const TutorsGet = ((req, res)=>{
     res.status(200).json(dados)
@@ -65,6 +64,7 @@ const PetPost = ((req, res)=>{
     }
 })
 
+//put ->
 const PutTutor = ((req, res)=>{
     const {id, name, phone, email, date_of_birth, zip_code, pets} = req.body
     const newdados = {id, name, phone, email, date_of_birth, zip_code, pets}
@@ -91,6 +91,7 @@ const PutTutor = ((req, res)=>{
     }
 })
 
+//put pet ->
 const PutPet = ((req, res)=>{
     const idTutor = req.params.tutorId
     const idPet = req.params.petId
@@ -121,4 +122,37 @@ const PutPet = ((req, res)=>{
         res.send('O id informado não pertence a nenhum tutor!')
     }
 })
-export default {TutorsGet, TutorsPost, PutTutor, PetPost, PutPet}
+// delete ->
+const DeleteTutor = ((req, res)=>{
+    const idTutor = req.params.id
+    const existed = dados.findIndex(a=> a.id == idTutor)
+    if(existed > -1){//id existe
+        dados.splice(existed, 1)
+        res.send('Tutor deletado com sucesso')
+    }else{//id não existe
+        res.send('O id informado não existe!')
+    }
+})
+// delete pet ->
+const DeletePet = ((req, res)=>{
+    const idTutor = req.params.tutorId
+    const idPet = req.params.petId
+    const existed = dados.findIndex(a=> a.id == idTutor)
+    if(existed > -1){//id tutor existe
+        try {
+            const existedPet = dados[existed].pets.findIndex(a => a.id == idPet)
+            if(existedPet > -1){// id pet existe
+                dados[existed].pets.splice(existedPet, 1)
+                res.send('Pet deletado com sucesso')
+            }else{//pet não existe
+                res.send('o id informado não pertence a nenhum pet!')
+            }
+        } catch (error) {
+            res.send("o Tutor informado não possui nenhum pet!")
+        }
+    }else{//id tutor não existe
+        res.send('O id informado não existe!')
+    }
+})
+
+export default {TutorsGet, TutorsPost, PutTutor, PetPost, PutPet, DeleteTutor, DeletePet}
