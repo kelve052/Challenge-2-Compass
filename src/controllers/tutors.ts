@@ -1,15 +1,20 @@
 import { Request, Response } from 'express';
-import UserRepository from '../Repositories/repository';
+import UserServices from '../Services/createTutor';
 
 //get->
 const TutorsGet = ((req: Request, res: Response)=>{
-    res.send("get all tutors")
+
 })
 
 //post->
-const TutorsPost = ((req: Request, res: Response)=>{
-    UserRepository.UserRepository.prototype.createfin(req.body)
-    res.send('deu certo')
+const TutorsPost = (async (req: Request, res: Response)=>{
+    try {
+        const createTutorService = new UserServices()
+        const result = await createTutorService.create(req.body)
+        return res.status(200).json({Msg: "Sucefull", new_tutor: result})
+    } catch (error) {
+        return res.status(400).json({Msg: "Failed"})
+    }
 })
 
 //post pet->

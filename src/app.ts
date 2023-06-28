@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import router from './Routes/routes'
 import connectDB from './db'
+import bodyParser from 'body-parser'
 
 const app = express()
 dotenv.config()

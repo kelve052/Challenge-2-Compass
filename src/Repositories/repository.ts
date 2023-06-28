@@ -1,12 +1,18 @@
 import tutorSchema from "../Model/model";
 
 class UserRepository {
-    createfin(body: string){
-        const usuario = tutorSchema.create(body)
-        console.log('deu certo')
-        console.log(body)
-        console.log(`\n\n\n\ ${usuario}`)
-        return usuario
+    async emailExiste(email: string){
+        const table = await tutorSchema.findOne({})
+        if(table?.email == email){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    async createTutor(body: any){
+        const newtutor = await tutorSchema.create(body)
+        return newtutor
     }
 }
-export default {UserRepository}
+export default UserRepository
