@@ -1,7 +1,9 @@
 import UserRepository from "../Repositories/repository"
 
 class UserServices {
-
+    async select(){
+        return await UserRepository.prototype.get()
+    }
     
     async create(body: any){
         const {email} = body

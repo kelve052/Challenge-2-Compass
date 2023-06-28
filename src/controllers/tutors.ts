@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import UserServices from '../Services/createTutor';
 
 //get->
-const TutorsGet = ((req: Request, res: Response)=>{
-
+const TutorsGet = ( async(req: Request, res: Response)=>{
+    const select = await new UserServices().select()
+    res.status(200).json({Msg: "Select Tutors", Tutors: select})
 })
 
 //post->
