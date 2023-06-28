@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import UserRepository from '../Repositories/repository';
 
 //get->
 const TutorsGet = ((req: Request, res: Response)=>{
@@ -7,7 +8,8 @@ const TutorsGet = ((req: Request, res: Response)=>{
 
 //post->
 const TutorsPost = ((req: Request, res: Response)=>{
-    res.send("post tutors")
+    UserRepository.UserRepository.prototype.createfin(req.body)
+    res.send('deu certo')
 })
 
 //post pet->

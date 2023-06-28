@@ -1,11 +1,24 @@
-import * as express from 'express'
-import * as dados from './dados-veterinaria'
-import routes from './Routes/routes'
+import dotenv from 'dotenv'
+import express from 'express'
+import router from './Routes/routes'
+import connectDB from './db'
+
 const app = express()
-const port: Number = 3000
+dotenv.config()
+
+const port: number = 3000
 
 app.use(express.json())
+app.use('/', router)
 
-app.use('/', routes)
-
-app.listen(port, ()=> console.log(`Server online port ${port}`))
+const start = async () => {
+    try {
+      // connectDB
+      await connectDB(process.env.MONGO_URI!);
+      app.listen(port, () => console.log(`Server is listening port ${port}...`));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  start();
