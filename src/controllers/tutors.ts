@@ -24,8 +24,15 @@ const PetPost = ((req: Request, res: Response)=>{
 })
 
 //put ->
-const PutTutor = ((req: Request, res: Response)=>{
-   res.send("put tutor")
+const PutTutor = ( async (req: Request, res: Response)=>{
+    try {
+        const idTutor = req.params.id
+        console.log(idTutor)
+        const update = await new UserServices().update(idTutor, req.body)
+        res.status(200).json({Msg: "Update Sucefull", tutor: update})
+    } catch (error) {
+        res.status(400).json({Msg: "update failed"})
+    }
 })
 
 //put pet ->
