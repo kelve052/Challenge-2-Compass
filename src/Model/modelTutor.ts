@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import {v4 as uuidv4} from "uuid"
+import modelPet from "./modelPet";
 
 const tutorSchema = new mongoose.Schema({
     _id:{
@@ -30,7 +31,7 @@ const tutorSchema = new mongoose.Schema({
         retuired: [true, 'tutor zip_code']
     },
     pets:{
-        type: Array
+        type: [modelPet]
     }
 
 })

@@ -1,16 +1,17 @@
 import { Request, Response } from "express";
-import UserServices from "../Services/tutorServices";
+import UserServicesTutor from "../Services/tutorServices";
+import userServicesPets from "../Services/petServices";
 
 //get->
 const TutorsGet = async (req: Request, res: Response) => {
-  const select = await new UserServices().select();
+  const select = await new UserServicesTutor().select();
   res.status(200).json({ Msg: "Select Tutors", Tutors: select });
 };
 
 //post->
 const TutorsPost = async (req: Request, res: Response) => {
   try {
-    const createTutorService = new UserServices();
+    const createTutorService = new UserServicesTutor();
     const result = await createTutorService.create(req.body);
     return res.status(200).json({ Msg: "Sucefull", new_tutor: result });
   } catch (error) {
@@ -22,7 +23,7 @@ const TutorsPost = async (req: Request, res: Response) => {
 const PutTutor = async (req: Request, res: Response) => {
   try {
     const idTutor = req.params.id;
-    const update = await new UserServices().update(idTutor, req.body);
+    const update = await new UserServicesTutor().update(idTutor, req.body);
     res.status(200).json({ Msg: "Update Sucefull", tutor: update });
   } catch (error) {
     res.status(400).json({ Msg: "update failed" });
@@ -33,7 +34,7 @@ const PutTutor = async (req: Request, res: Response) => {
 const DeleteTutor = async (req: Request, res: Response) => {
   try {
     const idTutor = req.params.id;
-    await new UserServices().delete(idTutor);
+    await new UserServicesTutor().delete(idTutor);
     res.status(204).end()
   } catch (error) {
     res.status(400).json({ Msg: "Error deleting" });
@@ -43,8 +44,9 @@ const DeleteTutor = async (req: Request, res: Response) => {
 
 
 //post pet->
-const PetPost = (req: Request, res: Response) => {
+const PetPost = async (req: Request, res: Response) => {
   const idTutor = req.params.tutorId
+  await new userServicesPets().postPet(idTutor)
 };
 
 //put pet ->

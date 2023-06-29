@@ -1,4 +1,4 @@
-import tutorSchema from "../Model/model";
+import tutorSchema from "../Model/modelTutor";
 
 class UserRepositoryTutors{
   async getTutor() {
@@ -41,7 +41,7 @@ class UserRepositoryTutors{
 
 class UserRepositoryPets{
   async postPet(idtutor: string){
-    console.log("certo", idtutor)
+    console.log(idtutor)
   }
 }
 

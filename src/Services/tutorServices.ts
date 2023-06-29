@@ -2,7 +2,7 @@ import UserRepository from "../Repositories/repository";
 
 const repositoryTutors = UserRepository.UserRepositoryTutors
 
-class UserServices {
+class UserServicesTutor {
   async select() {
     return await new repositoryTutors().getTutor()
   }
@@ -33,4 +33,4 @@ class UserServices {
     }
   }
 }
-export default UserServices;
+export default UserServicesTutor;
