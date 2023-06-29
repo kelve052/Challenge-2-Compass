@@ -11,8 +11,7 @@ const TutorsGet = async (req: Request, res: Response) => {
 //post->
 const TutorsPost = async (req: Request, res: Response) => {
   try {
-    const createTutorService = new UserServicesTutor();
-    const result = await createTutorService.create(req.body);
+    const result = await new UserServicesTutor().create(req.body);
     return res.status(200).json({ Msg: "Sucefull", new_tutor: result });
   } catch (error) {
     return res.status(400).json({ Msg: "Failed" });
@@ -57,6 +56,7 @@ const PutPet = (req: Request, res: Response) => {
 const DeletePet = (req: Request, res: Response) => {
   res.send("delete pet");
 };
+
 
 export default {
   TutorsGet,

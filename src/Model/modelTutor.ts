@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {v4 as uuidv4} from "uuid"
-import modelPet from "./modelPet";
+import {petSchema} from "./modelPet";
 
 const tutorSchema = new mongoose.Schema({
     _id:{
@@ -28,12 +28,12 @@ const tutorSchema = new mongoose.Schema({
     },
     zip_code:{
         type: Number,
-        retuired: [true, 'tutor zip_code']
+        required: [true, 'tutor zip_code']
     },
     pets:{
-        type: [modelPet]
+        type: [petSchema]
     }
 
 })
 
-export default mongoose.model('Veterinara', tutorSchema)
+export default mongoose.model('Tutor', tutorSchema)

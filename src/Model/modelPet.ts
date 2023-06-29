@@ -19,7 +19,7 @@ const petSchema = new mongoose.Schema({
     required: [true, "pet carry"]
   },
   weight:{
-    type: Boolean,
+    type: Number,
     required: [true, "pet weight"]
   },
   date_of_birth: {
@@ -28,4 +28,5 @@ const petSchema = new mongoose.Schema({
   }
 });
 
-export default {"Pets": petSchema};
+
+export {petSchema}
