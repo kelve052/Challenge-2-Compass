@@ -28,7 +28,7 @@ class UserServicesTutor {
   async delete(id: string) {
     try {
       await new repositoryTutors().existsTutor(id)
-      await new repositoryTutors().petInTutor(id)
+      await new repositoryTutors().petInTutor(id)// verifica se o tutor pssue pets
       await new repositoryTutors().deleteTutor(id);
     } catch (error) {
       throw error;

@@ -1,4 +1,3 @@
-import { petSchema } from "../Model/modelPet";
 import tutorSchema from "../Model/modelTutor";
 
 class UserRepositoryTutors{

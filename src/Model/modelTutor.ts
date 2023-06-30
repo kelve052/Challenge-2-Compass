@@ -11,6 +11,10 @@ const tutorSchema = new mongoose.Schema({
         type: String,
         required: [true, 'turor name']
     },
+    password:{
+      type: String,
+      required: true
+    },
     phone:{
         type: Number,
         required: [true, 'totor phone']
