@@ -19,6 +19,7 @@ class UserServicesTutor {
 
   async update(id: string, body: any) {
     try {
+      await new repositoryTutors().existsTutor(id)
       await new repositoryTutors().updateTutor(id, body);
     } catch (error) {
       throw error;
@@ -26,8 +27,9 @@ class UserServicesTutor {
   }
   async delete(id: string) {
     try {
-      const deleteTutor = await new repositoryTutors().deleteTutor(id);
-      return deleteTutor;
+      await new repositoryTutors().existsTutor(id)
+      await new repositoryTutors().petInTutor(id)
+      await new repositoryTutors().deleteTutor(id);
     } catch (error) {
       throw error;
     }

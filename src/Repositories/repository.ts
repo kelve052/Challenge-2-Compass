@@ -20,22 +20,38 @@ class UserRepositoryTutors{
     const newtutor = await tutorSchema.create(body);
     return newtutor;
   }
-  async updateTutor(id: string, body: any) {
-    const idtutor = await tutorSchema.findOne({ _id: id });
-    if (idtutor) {
-      const update = await tutorSchema.findByIdAndUpdate(id, body);
-      return update;
-    } else {
-      throw new Error("id does not belong to any tutor");
+
+  async existsTutor(idTutor: string){
+    const tutor = await tutorSchema.findById(idTutor)
+    if(!tutor){
+      throw Error
     }
+    return tutor?.id
+  }
+  
+  async updateTutor(id: string, body: any) {
+      try {
+        const update = await tutorSchema.findByIdAndUpdate(id, body);
+        return update;
+      } catch (error) {
+        throw  Error;
+      }
+  }
+  async petInTutor(idTutor: string){
+    await tutorSchema.findById(idTutor).then(
+      tutor => {
+        if(!(tutor?.pets.length == 0)){
+          throw Error//existe pet
+        }
+      }
+    )
   }
   async deleteTutor(id: string) {
-    const idtutor = await tutorSchema.findOne({ _id: id });
-    if (idtutor) {
-      const deleteTutor = await tutorSchema.findByIdAndDelete(idtutor);
+    try {
+      const deleteTutor = await tutorSchema.findByIdAndDelete(id);
       return deleteTutor;
-    } else {
-      throw new Error("id does not belong to any tutor");
+    } catch (error) {
+      throw Error;
     }
   }
 }
