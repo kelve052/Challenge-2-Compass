@@ -1,3 +1,4 @@
+import { petSchema } from "../Model/modelPet";
 import tutorSchema from "../Model/modelTutor";
 
 class UserRepositoryTutors{
@@ -40,8 +41,60 @@ class UserRepositoryTutors{
 }
 
 class UserRepositoryPets{
-  async postPet(idtutor: string){
-    console.log(idtutor)
+  async existsTutor(idTutor: string){
+    const tutor = await tutorSchema.findById(idTutor)
+    if(!tutor){
+      throw Error
+    }
+    return tutor?.id
+  }
+  async existsPet(idTutor: string, idPet: string){
+    await tutorSchema.findById(idTutor).then(
+      tutor => {
+        const petExists = tutor?.pets.some(pet => pet.id === idPet)
+        if(!petExists){
+          throw Error
+        }
+      }
+    )
+  }
+  async postPet(idTutor: any, body: any){
+    try {
+      await tutorSchema.findById(idTutor).then(
+        tutor =>{
+          tutor?.pets.push(body)
+          tutor?.save()
+        }
+      )
+    } catch (error) {
+      throw new Error("error creating a pet")
+    }
+  }
+  async putPet(idTutor: string, idPet: string, body: any){
+    try {
+      await tutorSchema.findById(idTutor).then(
+        tutor => {
+          const pet = tutor?.pets.id(idPet)
+          pet?.set(body)
+          tutor?.save()
+        }
+      )
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async deletePet(idTutor: string, idPet: string){
+    try {
+      await tutorSchema.findById(idTutor).then(
+        tutor => {
+          tutor?.pets.pull(idPet)
+          tutor?.save()
+      }
+      )
+    } catch (error) {
+      throw error
+    }
   }
 }
 

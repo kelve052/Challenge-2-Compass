@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 const petSchema = new mongoose.Schema({
   _id: {
     type: String,
-    default: uuidv4,
+    default: uuidv4
   },
   name: {
     type: String,
