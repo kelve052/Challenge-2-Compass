@@ -113,4 +113,20 @@ class UserRepositoryPets{
   }
 }
 
-export default {UserRepositoryTutors, UserRepositoryPets};
+class UserRepositoryAuth{
+  async authenticateUser(email: string, password: string){
+    try {
+      await tutorSchema.findOne({email}).then(
+        tutor =>{
+          if(!(tutor?.password == password)){
+            throw new Error("gyhf")
+          }
+        }
+      )
+    } catch (error) {
+      throw error
+    }
+  }
+}
+
+export default {UserRepositoryTutors, UserRepositoryPets, UserRepositoryAuth};
