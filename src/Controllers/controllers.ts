@@ -26,7 +26,7 @@ const PutTutor = async (req: Request, res: Response) => {
     const update = await new UserServicesTutor().update(idTutor, req.body);
     res.status(200).json({ Msg: "Update Sucefull", tutor: update });
   } catch (error) {
-    res.status(400).json({ Msg: "update failed" });
+    res.status(400).json({ Msg: `update failed: ${error.message}`});
   }
 };
 
@@ -36,7 +36,7 @@ const DeleteTutor = async (req: Request, res: Response) => {
     await new UserServicesTutor().delete(idTutor);
     res.status(204).end()
   } catch (error) {
-    res.status(400).json({ Msg: "Error deleting" });
+    res.status(400).json({ Msg: "Error deleting" + error });
   }
 };
 
