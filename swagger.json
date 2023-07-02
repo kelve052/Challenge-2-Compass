@@ -1,0 +1,160 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API veterinary",
+    "description": "This is a veterinary API, using mongoDB, with GET POST PUT and DELETE features, both for tutors and pets, with implemented authentication functionality, being mandatory in almost all routes",
+    "contact": {
+      "name": "Support",
+      "email": "kelveoliveira052@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/tutors": {
+      "tags": ["Tutors"],
+      "get":{
+        "description": "Registered tutors",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200":{
+            "description": "Registered tutors",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items":{
+                    "$ref":"#/components/schemas/ResponseCreateTutor"
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "error when searching for tutors"
+          }
+        }
+      },
+      "post": {
+        "description": "create new tutor",
+        "requestBody": {
+          "description": "data needed to create the tutor",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTutor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200":{
+            "description": "Successfully created tutor",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/components/schemas/ResponseCreateTutor"
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "Failed to create tutor"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateTutor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name to be entered in tutor",
+            "example": "Alex Abreu"
+          },
+          "password": {
+            "type": "string",
+            "description": "password to be created",
+            "example": "p#llk145$"
+          },
+          "phone": {
+            "type": "number",
+            "description": "phone to be created",
+            "example": 69993638638
+          },
+          "email": {
+            "type": "string",
+            "description": "email to be created",
+            "example": "jonas@paidepet.com"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date",
+            "description": "date of birthday to be inserted in tutor",
+            "example": "2000-12-12"
+          },
+          "zip_code": {
+            "type": "number",
+            "description": "zip code to be inserted in tutor",
+            "example": 61760000
+          }
+        }
+      },
+      "ResponseCreateTutor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name to be entered in tutor",
+            "example": "Alex Abreu"
+          },
+          "password": {
+            "type": "string",
+            "description": "password to be created",
+            "example": "p#llk145$"
+          },
+          "phone": {
+            "type": "number",
+            "description": "phone to be created",
+            "example": 69993638638
+          },
+          "email": {
+            "type": "string",
+            "description": "email to be created",
+            "example": "jonas@paidepet.com"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date",
+            "description": "date of birthday to be inserted in tutor",
+            "example": "2000-12-12"
+          },
+          "zip_code": {
+            "type": "number",
+            "description": "zip code to be inserted in tutor",
+            "example": 61760000
+          },
+          "id":{
+            "type": "string",
+            "description": "ID Tutor",
+            "format": "uuid"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth":{
+        "description": "JWT authentication",
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+      }
+    }
+  }
+}

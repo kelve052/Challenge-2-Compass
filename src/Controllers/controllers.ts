@@ -3,16 +3,20 @@ import UserServicesTutor from "../Services/tutorServices";
 import userServicesPets from "../Services/petServices";
 
 const TutorsGet = async (req: Request, res: Response) => {
-  const select = await new UserServicesTutor().select();
-  res.status(200).json({ Msg: "Select Tutors", Tutors: select });
+  try {
+    const select = await new UserServicesTutor().select();
+    res.status(200).json({ Msg: "Registered tutors", Tutors: select });
+  } catch (error) {
+    res.status(400).json({ Msg: "Error when searching for tutors"});
+  }
 };
 
 const TutorsPost = async (req: Request, res: Response) => {
   try {
     const result = await new UserServicesTutor().create(req.body);
-    return res.status(200).json({ Msg: "Sucefull", new_tutor: result });
+    return res.status(200).json({ Msg: "Successfully created tutor", new_tutor: result });
   } catch (error) {
-    return res.status(400).json({ Msg: "Failed" });
+    return res.status(400).json({ Msg: "Failed to create tutor" });
   }
 };
 
