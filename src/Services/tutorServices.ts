@@ -20,6 +20,7 @@ class UserServicesTutor {
   async update(id: string, body: any) {
     try {
       await new repositoryTutors().existsTutor(id)
+      await new repositoryTutors().bodyValidation(body)
       await new repositoryTutors().updateTutor(id, body);
     } catch (error) {
       throw error;

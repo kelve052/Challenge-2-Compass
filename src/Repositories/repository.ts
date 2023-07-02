@@ -1,6 +1,6 @@
 import tutorSchema from "../Model/modelTutor";
 
-class UserRepositoryTutors{
+class UserRepositoryTutors {
   async getTutor() {
     const select = await tutorSchema.find();
     return select;
@@ -20,30 +20,35 @@ class UserRepositoryTutors{
     return newtutor;
   }
 
-  async existsTutor(idTutor: string){
-    const tutor = await tutorSchema.findById(idTutor)
-    if(!tutor){
-      throw Error
+  async existsTutor(idTutor: string) {
+    const tutor = await tutorSchema.findById(idTutor);
+    if (!tutor) {
+      throw new Error("Nehym tutor with informed id");
     }
-    return tutor?.id
+    return tutor?.id;
+  }
+
+  async bodyValidation(body: any){
+    const {name, phone, email, date_of_birth, zip_code} = body
+    if(!name || !phone || !email || !date_of_birth || !zip_code){
+      throw new Error("missing or incorrect body fields")
+    }
   }
   
   async updateTutor(id: string, body: any) {
-      try {
-        const update = await tutorSchema.findByIdAndUpdate(id, body);
-        return update;
-      } catch (error) {
-        throw  Error;
-      }
+    try {
+      const update = await tutorSchema.findByIdAndUpdate(id, body);
+      return update;
+    } catch (error) {
+      throw Error;
+    }
   }
-  async petInTutor(idTutor: string){
-    await tutorSchema.findById(idTutor).then(
-      tutor => {
-        if(!(tutor?.pets.length == 0)){
-          throw Error//existe pet
-        }
+  async petInTutor(idTutor: string) {
+    await tutorSchema.findById(idTutor).then((tutor) => {
+      if (!(tutor?.pets.length == 0)) {
+        throw Error; //existe pet
       }
-    )
+    });
   }
   async deleteTutor(id: string) {
     try {
@@ -55,78 +60,68 @@ class UserRepositoryTutors{
   }
 }
 
-class UserRepositoryPets{
-  async existsTutor(idTutor: string){
-    const tutor = await tutorSchema.findById(idTutor)
-    if(!tutor){
-      throw Error
+class UserRepositoryPets {
+  async existsTutor(idTutor: string) {
+    const tutor = await tutorSchema.findById(idTutor);
+    if (!tutor) {
+      throw Error;
     }
-    return tutor?.id
+    return tutor?.id;
   }
-  async existsPet(idTutor: string, idPet: string){
-    await tutorSchema.findById(idTutor).then(
-      tutor => {
-        const petExists = tutor?.pets.some(pet => pet.id === idPet)
-        if(!petExists){
-          throw Error
-        }
+  async existsPet(idTutor: string, idPet: string) {
+    await tutorSchema.findById(idTutor).then((tutor) => {
+      const petExists = tutor?.pets.some((pet) => pet.id === idPet);
+      if (!petExists) {
+        throw Error;
       }
-    )
+    });
   }
-  async postPet(idTutor: any, body: any){
+  async postPet(idTutor: any, body: any) {
     try {
-      await tutorSchema.findById(idTutor).then(
-        tutor =>{
-          tutor?.pets.push(body)
-          tutor?.save()
-        }
-      )
+      await tutorSchema.findById(idTutor).then((tutor) => {
+        tutor?.pets.push(body);
+        tutor?.save();
+      });
     } catch (error) {
-      throw new Error("error creating a pet")
+      throw new Error("error creating a pet");
     }
   }
-  async putPet(idTutor: string, idPet: string, body: any){
+  async putPet(idTutor: string, idPet: string, body: any) {
     try {
-      await tutorSchema.findById(idTutor).then(
-        tutor => {
-          const pet = tutor?.pets.id(idPet)
-          pet?.set(body)
-          tutor?.save()
-        }
-      )
+      await tutorSchema.findById(idTutor).then((tutor) => {
+        const pet = tutor?.pets.id(idPet);
+        pet?.set(body);
+        tutor?.save();
+      });
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
-  async deletePet(idTutor: string, idPet: string){
+  async deletePet(idTutor: string, idPet: string) {
     try {
-      await tutorSchema.findById(idTutor).then(
-        tutor => {
-          tutor?.pets.pull(idPet)
-          tutor?.save()
-      }
-      )
+      await tutorSchema.findById(idTutor).then((tutor) => {
+        tutor?.pets.pull(idPet);
+        tutor?.save();
+      });
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }
 
-class UserRepositoryAuth{
-  async authenticateUser(email: string, password: string){
+class UserRepositoryAuth {
+  async authenticateUser(email: string, password: string) {
     try {
-      await tutorSchema.findOne({email}).then(
-        tutor =>{
-          if(!(tutor?.password == password)){
-            throw new Error("gyhf")
-          }
+      await tutorSchema.findOne({ email }).then((tutor) => {
+        if (!(tutor?.password == password)) {
+          throw new Error("gyhf");
         }
-      )
+      });
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }
 
-export default {UserRepositoryTutors, UserRepositoryPets, UserRepositoryAuth};
+export default { UserRepositoryTutors, UserRepositoryPets, UserRepositoryAuth };
