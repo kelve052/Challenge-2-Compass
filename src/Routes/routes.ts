@@ -6,7 +6,7 @@ import authentication from "../middleware/authMiddleware";
 
 //rotas tutor
 router.route('/tutors').get(authentication, controllers.TutorsGet)
-.post(authentication, controllers.TutorsPost)
+.post(controllers.TutorsPost)
 router.route('/tutor/:id').delete(authentication, controllers.DeleteTutor)
 .put(authentication, controllers.PutTutor)
 
