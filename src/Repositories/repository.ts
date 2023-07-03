@@ -7,17 +7,24 @@ class UserRepositoryTutors {
   }
 
   async emailExists(email: string) {
-    const table = await tutorSchema.findOne({});
-    if (table?.email == email) {
-      return true;
-    } else {
-      return false;
+    try {
+      await tutorSchema.findOne({ email }).then((tutor) => {
+        if (tutor) {
+          throw new Error("email already belongs to a tutor");
+        }
+      });
+    } catch (error) {
+      throw error;
     }
   }
 
   async createTutor(body: any) {
-    const newtutor = await tutorSchema.create(body);
-    return newtutor;
+    try {
+      const newtutor = await tutorSchema.create(body);
+      return newtutor;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async existsTutor(idTutor: string) {
@@ -28,25 +35,26 @@ class UserRepositoryTutors {
     return tutor?.id;
   }
 
-  async bodyValidation(body: any){
-    const {name, phone, email, date_of_birth, zip_code} = body
-    if(!name || !phone || !email || !date_of_birth || !zip_code){
-      throw new Error("missing or incorrect body fields")
+  async bodyValidation(body: any) {
+    const { name, phone, email, date_of_birth, zip_code } = body;
+    if (!name || !phone || !email || !date_of_birth || !zip_code) {
+      throw new Error("missing or incorrect body fields");
     }
+    return { name, phone, email, date_of_birth, zip_code };
   }
-  
+
   async updateTutor(id: string, body: any) {
     try {
-      const update = await tutorSchema.findByIdAndUpdate(id, body);
-      return update;
+      await tutorSchema.findByIdAndUpdate(id, body);
+      return body;
     } catch (error) {
-      throw Error;
+      throw error;
     }
   }
   async petInTutor(idTutor: string) {
     await tutorSchema.findById(idTutor).then((tutor) => {
       if (!(tutor?.pets.length == 0)) {
-        throw Error; //existe pet
+        throw new Error("Unable to delete an existing owner with pets");
       }
     });
   }
@@ -55,7 +63,7 @@ class UserRepositoryTutors {
       const deleteTutor = await tutorSchema.findByIdAndDelete(id);
       return deleteTutor;
     } catch (error) {
-      throw Error;
+      throw error;
     }
   }
 }
@@ -64,7 +72,7 @@ class UserRepositoryPets {
   async existsTutor(idTutor: string) {
     const tutor = await tutorSchema.findById(idTutor);
     if (!tutor) {
-      throw Error;
+      throw new Error("Nehym tutor with informed id");
     }
     return tutor?.id;
   }
@@ -72,7 +80,7 @@ class UserRepositoryPets {
     await tutorSchema.findById(idTutor).then((tutor) => {
       const petExists = tutor?.pets.some((pet) => pet.id === idPet);
       if (!petExists) {
-        throw Error;
+        throw new Error("The entered id does not belong to any pet");
       }
     });
   }
@@ -115,7 +123,7 @@ class UserRepositoryAuth {
     try {
       await tutorSchema.findOne({ email }).then((tutor) => {
         if (!(tutor?.password == password)) {
-          throw new Error("gyhf");
+          throw new Error("Incorrect email or password fields");
         }
       });
     } catch (error) {

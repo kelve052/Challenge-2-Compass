@@ -12,7 +12,7 @@ const auth = async (req: Request, res: Response)=>{
       const token = jwt.sign({email, password}, process.env.JWT_SECRET!, {expiresIn: "30d"})
       res.status(200).json({access_token: token})
     } catch (error) {
-      res.status(400).json({Msg: "Error"})
+      res.status(400).json({Msg: `Error: ${error.message}`})
     }
   }
 }
