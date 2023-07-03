@@ -14,7 +14,7 @@ const TutorsGet = async (req: Request, res: Response) => {
 const TutorsPost = async (req: Request, res: Response) => {
   try {
     const result = await new UserServicesTutor().create(req.body);
-    return res.status(200).json({ Msg: "Successfully created tutor", new_tutor: result });
+    return res.status(201).json({ Msg: "Successfully created tutor", new_tutor: result });
   } catch (error) {
     return res.status(400).json({ Msg: `Failed to create tutor: ${error.message}` });
   }
@@ -47,7 +47,7 @@ const PetPost = async (req: Request, res: Response) => {
   try {
     const idTutor = req.params.tutorId
     const create = await new userServicesPets().postPet(idTutor, req.body)
-    res.status(200).json({Msg: "Create pet sucefull", Pet: create})
+    res.status(201).json({Msg: "Create pet sucefull", Pet: create})
   } catch (error) {
     res.status(400).json({Msg: `Failed to CREATE pet: ${error.message}`})
   }

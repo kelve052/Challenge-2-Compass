@@ -12,7 +12,7 @@ const authentication = async (req: Request, res: Response, next: NextFunction) =
       jwt.verify(token, process.env.JWT_SECRET!)
       next()
     } catch (error) {
-      res.status(400).json({Msg: "incorrect token"})
+      res.status(401).json({Msg: "incorrect token"})
     }
   }
 }
