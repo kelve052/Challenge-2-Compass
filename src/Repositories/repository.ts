@@ -1,5 +1,6 @@
 import tutorSchema from "../Model/modelTutor";
 
+//Tutor ->
 class UserRepositoryTutors {
   async getTutor() {
     const select = await tutorSchema.find();
@@ -68,6 +69,7 @@ class UserRepositoryTutors {
   }
 }
 
+//Pet ->
 class UserRepositoryPets {
   async existsTutor(idTutor: string) {
     const tutor = await tutorSchema.findById(idTutor);
@@ -118,6 +120,7 @@ class UserRepositoryPets {
   }
 }
 
+//Auth ->
 class UserRepositoryAuth {
   async authenticateUser(email: string, password: string) {
     try {

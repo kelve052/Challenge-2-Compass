@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import router from "./Routes/routes";
-import connectDB from "./db";
+import connectDB from "./database/db";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../swagger.json"
 

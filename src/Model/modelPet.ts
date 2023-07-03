@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 const petSchema = new mongoose.Schema({
   _id: {
     type: String,
-    default: uuidv4
+    default: uuidv4,
   },
   name: {
     type: String,
@@ -14,19 +14,18 @@ const petSchema = new mongoose.Schema({
     type: String,
     required: [true, "pet species"],
   },
-  carry:{
+  carry: {
     type: String,
-    required: [true, "pet carry"]
+    required: [true, "pet carry"],
   },
-  weight:{
+  weight: {
     type: Number,
-    required: [true, "pet weight"]
+    required: [true, "pet weight"],
   },
   date_of_birth: {
     type: Date,
     required: [true, "pet date_of_birth"],
-  }
+  },
 });
 
-
-export {petSchema}
+export { petSchema };
